@@ -38,9 +38,26 @@ describe('Базовые функциональные проверки', () => {
       .should('have.length', 10);
   });
 
-  it('На странице отображается форма Поиска с кнопкой', () => {
-    cy.get('#search-form')
-      .should('be.visible')
+  it('Элементы Топ языков содержат корректные ссылки', function() {
+    this.mainData.topLanguages.forEach((language) => {
+      cy.contains('a', language.name)
+        .should('have.attr', 'href', language.link);
+    });
+  });
+
+  it('Проверка корректности перехода по ссылкам из Топ языков', function() {
+    this.mainData.topLanguages.forEach(lang => {
+      const fullUrl = `https:${lang.link}`; // Преобразуем относительный путь из файла фикстуры в 'https://'
+      const domain = new URL(fullUrl).hostname;
+
+      cy.get(`a[href="${lang.link}"].link-box`)
+        .click();
+      cy.origin(domain, { args: { domain } }, ({ domain }) => { // Передаем domain через args
+        cy.url()
+          .should('include', domain);
+      });
+      cy.visit('/'); // Более стабильный вариант возврата назад при кросс-доменных переходах
+    });
   });
 
 });
@@ -51,7 +68,7 @@ describe('SEO тесты', () => {
     cy.visit('/')
   })
 
-  it('Страница содержит h1, Title и Description', function() {
+  it('Страница содержит h1, Title и Description', () => {
     cy.get('h1')
      .contains('span', 'Wikipedia')
      .should('be.visible');

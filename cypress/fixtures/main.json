@@ -1,3 +1,55 @@
 {
-  "projectName": "Wikipedia"
+  "projectName": "Wikipedia",
+  "topLanguages": [
+    {
+      "name": "Русский",
+      "link": "//ru.wikipedia.org/",
+      "slogan": "Свободная энциклопедия"
+    },
+    {
+      "name": "English",
+      "link": "//en.wikipedia.org/",
+      "slogan": "The Free Encyclopedia"
+    },
+    {
+      "name": "日本語",
+      "link": "//ja.wikipedia.org/",
+      "slogan": "フリー百科事典"
+    },
+    {
+      "name": "Deutsch",
+      "link": "//de.wikipedia.org/",
+      "slogan": "Die freie Enzyklopädie"
+    },
+    {
+      "name": "Español",
+      "link": "//es.wikipedia.org/",
+      "slogan": "La enciclopedia libre"
+    },
+    {
+      "name": "Français",
+      "link": "//fr.wikipedia.org/",
+      "slogan": "L’encyclopédie libre"
+    },
+    {
+      "name": "中文",
+      "link": "//zh.wikipedia.org/",
+      "slogan": "自由的百科全书 / 自由的百科全書"
+    },
+    {
+      "name": "Italiano",
+      "link": "//it.wikipedia.org/",
+      "slogan": "L'enciclopedia libera"
+    },
+    {
+      "name": "Português",
+      "link": "//pt.wikipedia.org/",
+      "slogan": "A enciclopédia livre"
+    },
+    {
+      "name": "فارسی",
+      "link": "//fa.wikipedia.org/",
+      "slogan": "دانشنامهٔ آزاد"
+    }
+  ]
 }
