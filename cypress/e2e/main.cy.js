@@ -33,9 +33,12 @@ describe('Базовые функциональные проверки', () => {
       .should('be.visible')
   });
 
-  it('Топ языков содержит 10 элементов', () => {
-    cy.get('.link-box')
-      .should('have.length', 10);
+  it('Топ языков содержит соответствующее количество элементов', function() {
+    const expectedCount = this.mainData.topLanguages.length;
+    
+    cy.get('nav[aria-label="Top languages"]')
+      .find('.link-box')
+      .should('have.length', expectedCount);
   });
 
   it('Элементы Топ языков содержат корректные ссылки', function() {
@@ -60,25 +63,33 @@ describe('Базовые функциональные проверки', () => {
     });
   });
 
+  it('На странице отображается форма Поиска с кнопкой', () => {
+    cy.get('#search-form')
+      .should('be.visible')
+  })
+
 });
 
 
 describe('SEO тесты', () => {
   beforeEach(() => {
-    cy.visit('/')
-  })
-
-  it('Страница содержит h1, Title и Description', () => {
-    cy.get('h1')
-     .contains('span', 'Wikipedia')
-     .should('be.visible');
-    cy.title()
-     .should('eq', 'Wikipedia');
-   cy.get('head meta[name="description"]')
-     .should('have.attr', 'content')
-     .and('contain', 'Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation.');
+    cy.visit('/');
+    cy.fixture('main').as('seoData');
   });
 
+  it('Страница содержит корректные SEO-теги', function() {
+    const { seo } = this.seoData;
+
+    cy.get('h1')
+      .contains('span', seo.h1)
+      .should('be.visible');
+    cy.title()
+      .should('eq', seo.title);
+    cy.get('head meta[name="description"]')
+      .should('have.attr', 'content')
+      .and('contain', seo.description);
+  });
+  
 });
 
 
@@ -89,7 +100,8 @@ describe('Проверка производительности (Performance Tes
     cy.visit('/')
       .then(() => {
         const loadTime = Date.now() - t;
-        expect(loadTime).to.be.lessThan(3000, `Время загрузки страницы составило: ${loadTime} мс (максимально допустимое время: 3000 мс)`);
+        const maxTime = 3000
+        expect(loadTime).to.be.lessThan(maxTime, `Время загрузки страницы составило: ${loadTime} мс (максимально допустимое время: ${maxTime} мс)`);
       })
   })
 })
